@@ -1,4 +1,5 @@
 # DA2
+
 Tên đề tài: Xây dựng website hỗ trợ học ngữ pháp tiếng Anh với NestJS
 Bộ môn: Công nghệ phần mềm
 Bộ môn: 502 - KTPM
@@ -21,13 +22,11 @@ Yêu cầu công nghệ:
 
 • Triển khai: Docker, CI/CD pipelines (nếu có)
 
- 
-
 Mục tiêu phát triển:
 
 Sinh viên sẽ phải xây dựng một hệ thống web học ngữ pháp với các tính năng chính bao gồm:
 
- 1. Quản lý tài khoản người dùng:
+1.  Quản lý tài khoản người dùng:
 
 • Người dùng có thể đăng ký, đăng nhập và quản lý thông tin cá nhân.
 
@@ -65,11 +64,9 @@ Sinh viên sẽ phải xây dựng một hệ thống web học ngữ pháp vớ
 
 • Theo dõi thống kê người dùng, số lượng bài học đã hoàn thành, số lượt truy cập và các báo cáo khác.
 
- 
-
 Đầu ra dự kiến:
 
- 1. Website hoàn chỉnh: Một trang web tương tác thân thiện với người dùng, cung cấp các bài học và bài tập ngữ pháp tiếng Anh.
+1. Website hoàn chỉnh: Một trang web tương tác thân thiện với người dùng, cung cấp các bài học và bài tập ngữ pháp tiếng Anh.
 
 2. API RESTful: Hệ thống API rõ ràng, bảo mật và hiệu quả để hỗ trợ các chức năng của nền tảng.
 
@@ -77,11 +74,9 @@ Sinh viên sẽ phải xây dựng một hệ thống web học ngữ pháp vớ
 
 4. Báo cáo tiến độ học tập: Người học có thể xem lịch sử học tập và đánh giá tiến độ của họ thông qua các bảng điều khiển chi tiết.
 
- 
-
 Tiêu chí đánh giá:
 
- 1. Tính năng đầy đủ: Tất cả các yêu cầu được triển khai và hoạt động theo đúng chức năng mô tả.
+1. Tính năng đầy đủ: Tất cả các yêu cầu được triển khai và hoạt động theo đúng chức năng mô tả.
 
 2. Hiệu suất và tối ưu hóa: Ứng dụng phải hoạt động nhanh chóng, xử lý các yêu cầu một cách hiệu quả, đặc biệt với số lượng lớn người dùng.
 
