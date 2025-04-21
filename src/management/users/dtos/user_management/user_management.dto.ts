@@ -57,11 +57,6 @@ export class UserDataDto {
 
   @IsString()
   @IsOptional()
-  @ApiProperty({ required: false, description: "Số CMND" })
-  citizenId?: string;
-
-  @IsString()
-  @IsOptional()
   @ApiProperty({ required: false, description: "Giới tính" })
   gender?: string;
 
@@ -89,11 +84,6 @@ export class UserDataDto {
   @IsOptional()
   @ApiProperty({ required: false, description: "Quốc gia" })
   country?: string;
-
-  @IsString()
-  @IsOptional()
-  @ApiProperty({ required: false, description: "Mã bưu chính" })
-  postcode?: string;
 
   @IsArray()
   @Type(() => Number)
@@ -122,11 +112,6 @@ export class AddUserDataDto {
 
   @IsString()
   @IsOptional()
-  @ApiProperty({ required: false, description: "Số CMND" })
-  citizenId?: string;
-
-  @IsString()
-  @IsOptional()
   @ApiProperty({ required: false, description: "Giới tính" })
   gender?: string;
 
@@ -154,11 +139,6 @@ export class AddUserDataDto {
   @IsOptional()
   @ApiProperty({ required: false, description: "Quốc gia" })
   country?: string;
-
-  @IsString()
-  @IsOptional()
-  @ApiProperty({ required: false, description: "Mã bưu chính" })
-  postcode?: string;
 
   @IsString()
   @ApiProperty({ required: true, description: "Tên đăng nhập" })
@@ -208,7 +188,7 @@ export class ErrorResponseDto {
 }
 
 export class IdUserDto {
-  @IsString()
+  @IsNumber()
   @ApiProperty()
-  id: string;
+  id: number;
 }

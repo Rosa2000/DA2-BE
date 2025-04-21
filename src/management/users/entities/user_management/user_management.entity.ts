@@ -1,10 +1,17 @@
 import { UserGroup } from "src/management/user_groups/entities/user_group/user_group.entity";
-import { Column, Entity, ObjectId, ObjectIdColumn, OneToMany } from "typeorm";
+import {
+  Column,
+  Entity,
+  ObjectId,
+  ObjectIdColumn,
+  OneToMany,
+  PrimaryGeneratedColumn
+} from "typeorm";
 
 @Entity("users")
 export class UserInformation {
-  @ObjectIdColumn() // Khóa chính dạng ObjectId của MongoDB
-  id: ObjectId;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @Column()
   fullname: string;
@@ -17,9 +24,6 @@ export class UserInformation {
 
   @Column()
   gender: string;
-
-  @Column()
-  citizen_id: string;
 
   @Column()
   address: string;
@@ -35,9 +39,6 @@ export class UserInformation {
 
   @Column()
   country: string;
-
-  @Column()
-  postcode: string;
 
   @Column()
   username: string;
@@ -60,9 +61,8 @@ export class UserInformation {
 
 @Entity("users")
 export class AddUserInformation {
-  @ObjectIdColumn() // Khóa chính dạng ObjectId của MongoDB
-  id: ObjectId;
-
+  @PrimaryGeneratedColumn()
+  id: number;
   @Column()
   fullname: string;
 
@@ -74,9 +74,6 @@ export class AddUserInformation {
 
   @Column()
   gender: string;
-
-  @Column()
-  citizen_id: string;
 
   @Column()
   address: string;
@@ -92,9 +89,6 @@ export class AddUserInformation {
 
   @Column()
   country: string;
-
-  @Column()
-  postcode: string;
 
   @Column()
   username: string;

@@ -18,12 +18,10 @@ import {
   UseGuards
 } from "@nestjs/common";
 import { responseMessage } from "src/utils/constant";
-import { LoggerService } from "src/utils/log_service.service";
 
 import { VerifyLoginMiddleware } from "src/middleware/verify_user.middleware";
 
 import { UserGroupService } from "../../services/user_group/user_group.service";
-import { DatabaseLogService } from "src/management/common/log_user_activities/providers/user_activities.service";
 import {
   AddGroupRoleDto,
   GetUserGroupManagementDto,
@@ -34,11 +32,7 @@ import { GroupRoleListRequestData } from "../../interfaces/user_group/user_group
 @Controller("/v1/role_management")
 @ApiTags("API quản lý thông tin phân quyền")
 export class UserGroupManagmentController {
-  constructor(
-    private readonly logger: LoggerService,
-    private readonly groupService: UserGroupService,
-    private readonly databaseLogService: DatabaseLogService
-  ) {}
+  constructor(private readonly groupService: UserGroupService) {}
 
   private async respondWithBadRequest(
     actionType: string,
@@ -55,8 +49,6 @@ export class UserGroupManagmentController {
       userAgent: req.headers["user-agent"],
       responseContent: responseMessage.badRequest
     };
-
-    await this.databaseLogService.handleSaveAuditLog(actionType, dataLog);
 
     return res.status(HttpStatus.OK).json({
       code: -2,
@@ -84,20 +76,16 @@ export class UserGroupManagmentController {
       userAgent: req.headers["user-agent"],
       responseContent
     };
-
-    await this.databaseLogService.handleSaveAuditLog(actionType, dataLog);
   }
 
   private handleError(res: Response, error: any) {
     console.log(error);
     if (error.response.status !== 500) {
-      this.logger.error(error.response.message, error);
       return res.status(HttpStatus.OK).json({
         code: error.response.code,
         message: error.response.message
       });
     } else {
-      this.logger.error(responseMessage.serviceError, error);
       return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
         code: -5,
         message: responseMessage.serviceError
@@ -136,12 +124,10 @@ export class UserGroupManagmentController {
       );
 
       if (userGroup.data.length == 0) {
-        this.logger.log(responseMessage.notFound, req.body);
         res
           .status(HttpStatus.OK)
           .send({ code: -4, message: responseMessage.notFound, data: [] });
       } else {
-        this.logger.log(responseMessage.success);
         res.status(HttpStatus.OK).send({
           code: 0,
           message: responseMessage.success,
@@ -155,7 +141,6 @@ export class UserGroupManagmentController {
       //   await this.responseSystemService.respondWithBadRequest("data_role", req, res, "group_roles");
       // }
     } catch (error) {
-      this.logger.error("Error in /data_role:", error);
       console.error("data_role", error);
       await this.saveAuditLog("data_role", req, res, error, false);
       return this.handleError(res, error);
@@ -174,7 +159,6 @@ export class UserGroupManagmentController {
     try {
       if (Object.keys(req.body).length > 0) {
         const addedRole = await this.groupService.addGroupRole(roleData);
-        this.logger.log(responseMessage.success);
         await this.saveAuditLog("add_role", req, res, addedRole);
         res
           .status(HttpStatus.OK)
@@ -183,7 +167,6 @@ export class UserGroupManagmentController {
         await this.respondWithBadRequest("add_role", req, res);
       }
     } catch (error) {
-      this.logger.error("Error in /add_role:", error);
       console.error("add_role", error);
       await this.saveAuditLog("add_role", req, res, error, false);
       return this.handleError(res, error);
@@ -209,7 +192,6 @@ export class UserGroupManagmentController {
           id,
           roleData
         );
-        this.logger.log(responseMessage.success);
         await this.saveAuditLog("edit_role", req, res, editedRole);
         res
           .status(HttpStatus.OK)
@@ -218,7 +200,6 @@ export class UserGroupManagmentController {
         await this.respondWithBadRequest("edit_role", req, res);
       }
     } catch (error) {
-      this.logger.error("Error in /edit_role:", error);
       console.error("edit_role", error);
       await this.saveAuditLog("edit_role", req, res, error, false);
       return this.handleError(res, error);
@@ -239,7 +220,6 @@ export class UserGroupManagmentController {
     try {
       if (id) {
         const deletedRole = await this.groupService.handleDeleteGroupRole(id);
-        this.logger.log(responseMessage.success);
         await this.saveAuditLog("delete_role", req, res, deletedRole);
         res
           .status(HttpStatus.OK)
@@ -248,7 +228,6 @@ export class UserGroupManagmentController {
         await this.respondWithBadRequest("delete_role", req, res);
       }
     } catch (error) {
-      this.logger.error("Error in /delete_role:", error);
       console.error("delete_role", error);
       await this.saveAuditLog("delete_role", req, res, error, false);
       return this.handleError(res, error);

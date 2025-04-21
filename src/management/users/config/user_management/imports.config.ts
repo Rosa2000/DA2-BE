@@ -11,6 +11,7 @@ import {
   GroupRole,
   UserGroup
 } from "src/management/user_groups/entities/user_group/user_group.entity";
+import { Status } from "src/management/common/status/entities/status.entity";
 
 export const UserManagementImports = [
   TypeOrmModule.forFeature([
@@ -19,6 +20,7 @@ export const UserManagementImports = [
     ChangePasswordInformation,
     UserGroup,
     GroupRole,
-    UserVerifyInformation
+    UserVerifyInformation,
+    Status
   ])
 ];

@@ -1,1 +1,3 @@
-export const ManagementAppProviders = [];
+import { VerifyLoginMiddleware } from "src/middleware/verify_user.middleware";
+
+export const ManagementAppProviders = [VerifyLoginMiddleware];

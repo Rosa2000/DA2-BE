@@ -88,13 +88,11 @@ export class UserManagementService {
         email: item.email,
         phone_number: item.phone_number,
         gender: item.gender,
-        citizen_id: item.citizen_id,
         address: item.address,
         ward: item.ward,
         district: item.district,
         province: item.province,
         country: item.country,
-        postcode: item.postcode,
         username: item.username,
         status_id: item.status_id,
         user_group: item.user_group.map((detail) => detail.group_id)
@@ -116,19 +114,17 @@ export class UserManagementService {
   }
 
   async handleEditUser(
-    id: string,
+    id: number,
     dataUser: EditUserManagementDto
   ): Promise<any> {
     const {
       fullname,
       address,
-      citizenId,
       country,
       district,
       email,
       gender,
       phoneNumber,
-      postcode,
       province,
       ward,
       userGroupId
@@ -136,7 +132,7 @@ export class UserManagementService {
 
     try {
       const existingUser = await this.userRepository.findOne({
-        where: { id: new ObjectId(id) }
+        where: { id: id }
       });
       if (!existingUser) {
         throw new NotFoundException({
@@ -179,13 +175,11 @@ export class UserManagementService {
       // Cập nhật thông tin user
       existingUser.fullname = fullname ?? existingUser.fullname;
       existingUser.address = address ?? existingUser.address;
-      existingUser.citizen_id = citizenId ?? existingUser.citizen_id;
       existingUser.country = country ?? existingUser.country;
       existingUser.district = district ?? existingUser.district;
       existingUser.email = email ?? existingUser.email;
       existingUser.gender = gender ?? existingUser.gender;
       existingUser.phone_number = phoneNumber ?? existingUser.phone_number;
-      existingUser.postcode = postcode ?? existingUser.postcode;
       existingUser.province = province ?? existingUser.province;
       existingUser.ward = ward ?? existingUser.ward;
       existingUser.modified_date = new Date();
@@ -205,13 +199,11 @@ export class UserManagementService {
     const {
       fullname,
       address,
-      citizenId,
       country,
       district,
       email,
       gender,
       phoneNumber,
-      postcode,
       province,
       ward,
       username,
@@ -241,13 +233,11 @@ export class UserManagementService {
       const newUser = this.addUserRepository.create({
         fullname,
         address,
-        citizen_id: citizenId,
         country,
         district,
         email,
         gender,
         phone_number: phoneNumber,
-        postcode,
         province,
         ward,
         username,
@@ -262,7 +252,7 @@ export class UserManagementService {
       const promises: Promise<any>[] = [];
       for (const groupId of userGroupId ?? []) {
         const newUserGroup = this.userGroupRepository.create({
-          user_id: addedUser.id.toString(),
+          user_id: addedUser.id,
           group_id: Number(groupId)
         });
         promises.push(this.userGroupRepository.save(newUserGroup));
@@ -279,10 +269,10 @@ export class UserManagementService {
     }
   }
 
-  async handleDeleteUser(id: string): Promise<UserInformation> {
+  async handleDeleteUser(id: number): Promise<UserInformation> {
     try {
       const existingUser = await this.userRepository.findOne({
-        where: { id: new ObjectId(id) }
+        where: { id: id }
       });
       if (!existingUser) {
         throw new ConflictException({
@@ -307,7 +297,7 @@ export class UserManagementService {
   }
 
   async handleChangePassword(
-    id: string,
+    id: number,
     changePasswordData: ChangePasswordData
   ): Promise<any> {
     try {

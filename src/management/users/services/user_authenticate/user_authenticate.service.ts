@@ -129,13 +129,11 @@ export class UserAuthenticateService {
         password: hashedPassword,
         status_id: 1,
         gender: "", // Giá trị mặc định, có thể yêu cầu trong DTO nếu cần
-        citizen_id: "",
         address: "",
         ward: "",
         district: "",
         province: "",
         country: "",
-        postcode: "",
         modified_date: new Date()
       });
       const savedUser = await this.userRepository.save(newUser);
@@ -143,7 +141,7 @@ export class UserAuthenticateService {
       // Gán group role
       const groupId = isAdmin ? 1 : 2; // 1 cho admin, 2 cho user thường
       const groupRole = await this.groupRoleRepository.findOne({
-        where: { id: new ObjectId(groupId) } // Giả định id trong GroupRole là ObjectId
+        where: { id: groupId } // Giả định id trong GroupRole là ObjectId
       });
 
       if (!groupRole) {
@@ -155,7 +153,7 @@ export class UserAuthenticateService {
 
       const newUserGroup = this.userGroupRepository.create({
         group_id: groupId, // Lưu ý: Nếu group_id cần là ObjectId, cần điều chỉnh
-        user_id: savedUser.id.toString()
+        user_id: savedUser.id
       });
       await this.userGroupRepository.save(newUserGroup);
 

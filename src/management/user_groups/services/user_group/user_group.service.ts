@@ -9,24 +9,14 @@ import { responseMessage } from "src/utils/constant";
 
 import { GroupRole } from "../../entities/user_group/user_group.entity";
 import { GroupRoleListRequestData } from "../../interfaces/user_group/user_group.interface";
-import { LoggerService } from "src/utils/log_service.service";
-import {
-  UserGroup,
-  UserGroupLevel2,
-  UserGroupLevel3
-} from "../../entities/user_group/user_group.entity";
+import { UserGroup } from "../../entities/user_group/user_group.entity";
 @Injectable()
 export class UserGroupService {
   constructor(
     @InjectRepository(UserGroup)
     private readonly userGroupRepository: Repository<UserGroup>,
-    @InjectRepository(UserGroupLevel2)
-    private readonly userGroupLevel2Repository: Repository<UserGroupLevel2>,
-    @InjectRepository(UserGroupLevel3)
-    private readonly userGroupLevel3Repository: Repository<UserGroupLevel3>,
     @InjectRepository(GroupRole)
-    private readonly groupRoleRepository: Repository<GroupRole>,
-    private readonly logger: LoggerService
+    private readonly groupRoleRepository: Repository<GroupRole>
   ) {}
 
   async findListGroup(
@@ -113,7 +103,6 @@ export class UserGroupService {
         title,
         description,
         permission,
-        level: 1,
         status_id: 1
       });
       await this.groupRoleRepository.save(newGroupRole);
@@ -121,7 +110,6 @@ export class UserGroupService {
       return newGroupRole;
     } catch (error) {
       console.log(error);
-      this.logger.error(responseMessage.serviceError, error);
       throw new InternalServerErrorException({
         code: -5,
         message: responseMessage.serviceError
@@ -161,7 +149,6 @@ export class UserGroupService {
       return updateGroupRole;
     } catch (error) {
       console.log(error);
-      this.logger.error(responseMessage.serviceError, error);
       throw new InternalServerErrorException({
         code: -5,
         message: responseMessage.serviceError
@@ -190,7 +177,6 @@ export class UserGroupService {
       return existGroupRole;
     } catch (error) {
       console.log(error);
-      this.logger.error(responseMessage.serviceError, error);
       throw new InternalServerErrorException({
         code: -5,
         message: responseMessage.serviceError

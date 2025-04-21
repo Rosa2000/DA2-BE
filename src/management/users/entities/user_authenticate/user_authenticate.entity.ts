@@ -11,10 +11,10 @@ import {
 
 @Entity("users")
 export class UserLoginInformation {
-  @ObjectIdColumn() // Khóa chính dạng ObjectId của MongoDB
-  id: ObjectId;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-  @Column({ type: "nvarchar", length: 500 })
+  @Column()
   email: string;
 
   @Column()
@@ -29,8 +29,8 @@ export class UserLoginInformation {
 
 @Entity("users")
 export class UserVerifyInformation {
-  @ObjectIdColumn() // Khóa chính dạng ObjectId của MongoDB
-  id: ObjectId;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @Column()
   fullname: string;
@@ -56,8 +56,8 @@ export class UserVerifyInformation {
 
 @Entity("users")
 export class UserChangePassword {
-  @ObjectIdColumn() // Khóa chính dạng ObjectId của MongoDB
-  id: ObjectId;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @Column()
   email: string;
@@ -74,8 +74,8 @@ export class UserChangePassword {
 
 @Entity("users")
 export class ChangePasswordInformation {
-  @ObjectIdColumn() // Khóa chính dạng ObjectId của MongoDB
-  id: ObjectId;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @Column()
   email: string;

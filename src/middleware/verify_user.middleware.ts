@@ -60,8 +60,7 @@ export class VerifyLoginMiddleware implements NestMiddleware {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { password, status_id, ...userWithoutSensitiveData } = user;
         req.userData = {
-          ...userWithoutSensitiveData,
-          status_description: status ? status.description : null
+          ...userWithoutSensitiveData
         };
 
         return next();

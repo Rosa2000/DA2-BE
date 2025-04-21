@@ -5,23 +5,21 @@ import {
   Column,
   PrimaryGeneratedColumn,
   JoinColumn,
-  ManyToOne,
-  ObjectIdColumn,
-  ObjectId
+  ManyToOne
 } from "typeorm";
 
 // import { VendorInformation } from "src/management_portal/vendors/entity/vendors.entity";
 
 @Entity("user_group")
 export class UserGroup {
-  @ObjectIdColumn() // Khóa chính dạng ObjectId của MongoDB
-  id: ObjectId;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @Column()
   group_id: number;
 
   @Column()
-  user_id: string;
+  user_id: number;
 
   //   @ManyToOne(() => VendorInformation, (vendor) => vendor.user_group)
   //   @JoinColumn({ name: "user_id", referencedColumnName: "user_id" })
@@ -38,8 +36,8 @@ export class UserGroup {
 
 @Entity("group_role")
 export class GroupRole {
-  @ObjectIdColumn() // Khóa chính dạng ObjectId của MongoDB
-  id: ObjectId;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @Column()
   title: string;
