@@ -64,8 +64,8 @@ export class UserManagmentController {
   private handleError(res: Response, error: any) {
     if (error.status !== 500) {
       return res.status(HttpStatus.OK).json({
-        code: error.response.code,
-        message: error.response.message
+        code: error?.response?.code,
+        message: error?.response?.message
       });
     } else {
       return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({

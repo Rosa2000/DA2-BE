@@ -21,5 +21,6 @@ export const databaseConfig = (): TypeOrmModuleOptions => ({
   username: process.env.POSTGRES_USER || "postgres",
   password: process.env.POSTGRES_PASSWORD || "123456789",
   database: process.env.POSTGRES_DB || "ezenglish",
-  synchronize: true
+  entities: [__dirname + "/../**/*.entity{.ts,.js}"],
+  synchronize: false
 });

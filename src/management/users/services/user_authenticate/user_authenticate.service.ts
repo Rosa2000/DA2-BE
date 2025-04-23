@@ -11,19 +11,20 @@ import * as jwt from "jsonwebtoken";
 import * as dotenv from "dotenv";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Not, Repository } from "typeorm";
-import { ObjectId } from "mongodb";
 import { responseMessage } from "src/utils/constant";
 import {
   ManagementLoginResponseData,
   ResetPasswordData
 } from "../../interfaces/user_authenticate/user_authenticate.interface";
 import { RegisterManagementDto } from "../../dtos/user_authenticate/user_authenticate.dto";
-import { AddUserInformation } from "src/management/users/entities/user_management/user_management.entity";
-import { UserGroup } from "src/management/user_groups/entities/user_group/user_group.entity";
-import { GroupRole } from "src/management/user_groups/entities/user_group/user_group.entity";
+import { AddUserInformation } from "../../entities/user_management/user_management.entity";
+import {
+  GroupRole,
+  UserGroup
+} from "src/management/user_groups/entities/user_group/user_group.entity";
 
 dotenv.config();
-const JWT_SECRET = process.env.VTC_JWT_SECRET;
+const JWT_SECRET = process.env.JWT_SECRET;
 
 @Injectable()
 export class UserAuthenticateService {
@@ -38,8 +39,8 @@ export class UserAuthenticateService {
     private readonly userGroupRepository: Repository<UserGroup>
   ) {}
 
-  private generateAccessToken(user: AddUserInformation): any {
-    const payload = { username: user.username, sub: user.id.toString() };
+  private generateAccessToken(user: any): any {
+    const payload = { username: user?.username, sub: user?.id?.toString() };
     return jwt.sign(payload, JWT_SECRET, { expiresIn: "86400s" });
   }
 
@@ -101,12 +102,11 @@ export class UserAuthenticateService {
 
   async registerUserManagement(
     registerManagementDto: RegisterManagementDto
-  ): Promise<AddUserInformation> {
+  ): Promise<any> {
     const { fullname, email, username, phoneNumber, password, isAdmin } =
       registerManagementDto;
 
     const user = await this.userRepository.findOne({ where: { username } });
-
     if (user) {
       throw new ConflictException({ code: -1, message: "User này đã tồn tại" });
     }
@@ -156,10 +156,9 @@ export class UserAuthenticateService {
         user_id: savedUser.id
       });
       await this.userGroupRepository.save(newUserGroup);
-
       return savedUser;
     } catch (error) {
-      console.error(error);
+      console.log(error);
       throw new InternalServerErrorException({
         code: -5,
         message: responseMessage.serviceError

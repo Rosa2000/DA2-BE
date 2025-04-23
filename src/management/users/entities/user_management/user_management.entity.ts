@@ -1,12 +1,5 @@
 import { UserGroup } from "src/management/user_groups/entities/user_group/user_group.entity";
-import {
-  Column,
-  Entity,
-  ObjectId,
-  ObjectIdColumn,
-  OneToMany,
-  PrimaryGeneratedColumn
-} from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("users")
 export class UserInformation {
@@ -63,6 +56,7 @@ export class UserInformation {
 export class AddUserInformation {
   @PrimaryGeneratedColumn()
   id: number;
+
   @Column()
   fullname: string;
 

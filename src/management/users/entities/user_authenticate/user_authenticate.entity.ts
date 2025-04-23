@@ -1,13 +1,5 @@
 import { UserGroup } from "src/management/user_groups/entities/user_group/user_group.entity";
-import {
-  Entity,
-  Column,
-  PrimaryColumn,
-  PrimaryGeneratedColumn,
-  OneToMany,
-  ObjectIdColumn,
-  ObjectId
-} from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
 
 @Entity("users")
 export class UserLoginInformation {
