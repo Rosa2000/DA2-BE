@@ -7,7 +7,7 @@ import { Status } from "../common/status/entities/status.entity";
 import { Exercise, UserExercise } from "./exercise.entity";
 import { ExerciseController } from "./exercise.controller";
 import { ExercisesService } from "./exercise.service";
-import { Lesson, UserLesson } from "../lessons/lessions.entity";
+import { Lesson, UserLesson } from "../lessons/lessons.entity";
 
 @Module({
   imports: [

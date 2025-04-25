@@ -1,7 +1,7 @@
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { Status } from "src/management/common/status/entities/status.entity";
 import { ExercisesModule } from "src/management/exercise/exercise.module";
-import { LessonsModule } from "src/management/lessons/lessions.module";
+import { LessonsModule } from "src/management/lessons/lessons.module";
 import {
   GroupRole,
   UserGroup

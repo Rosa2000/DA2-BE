@@ -18,7 +18,7 @@ import {
 } from "./exercise.dto";
 import { Exercise, UserExercise } from "./exercise.entity";
 import { Status } from "../common/status/entities/status.entity";
-import { Lesson, UserLesson } from "../lessons/lessions.entity";
+import { Lesson, UserLesson } from "../lessons/lessons.entity";
 import { responseMessage } from "src/utils/constant";
 
 @Injectable()

@@ -7,14 +7,14 @@ import {
 } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, Repository } from "typeorm";
-import { Lesson, UserLesson } from "./lessions.entity";
+import { Lesson, UserLesson } from "./lessons.entity";
 import {
   CreateLessonDto,
   LessonResponseDto,
   StudyLessonDto,
   UpdateLessonDto,
   UserLessonResponseDto
-} from "./lessions.dto";
+} from "./lessons.dto";
 import { responseMessage } from "src/utils/constant";
 
 @Injectable()

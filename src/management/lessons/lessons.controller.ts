@@ -20,7 +20,7 @@ import {
 import { responseMessage } from "src/utils/constant";
 
 import { VerifyLoginMiddleware } from "src/middleware/verify_user.middleware";
-import { LessonsService } from "./lessions.service";
+import { LessonsService } from "./lessons.service";
 import {
   CreateLessonDto,
   GetDataLessonDto,
@@ -28,7 +28,7 @@ import {
   StudyLessonDto,
   UpdateLessonDto,
   UserLessonDto
-} from "./lessions.dto";
+} from "./lessons.dto";
 
 @Controller("/v1/lesson")
 @ApiTags("API quản lý và tương tác bài học")
