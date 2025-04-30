@@ -85,11 +85,9 @@ export class UserAuthenticateService {
         accessToken
       };
     } catch (error) {
-      console.error("error", error);
-      if (
-        error instanceof BadRequestException ||
-        error instanceof UnauthorizedException
-      ) {
+      console.error("error1", error);
+      if ( error instanceof BadRequestException || error instanceof UnauthorizedException) {
+        console.log("error2", error);
         throw error;
       } else {
         throw new InternalServerErrorException({

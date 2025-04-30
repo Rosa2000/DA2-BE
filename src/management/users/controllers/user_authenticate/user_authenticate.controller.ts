@@ -71,8 +71,8 @@ export class UserAuthenticateManagementController {
       }
     } catch (error) {
       return res
-        .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .json({ code: -5, message: responseMessage.serviceError });
+        .status(error.getStatus())
+        .json(error.getResponse());
     }
   }
 
