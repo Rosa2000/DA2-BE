@@ -11,12 +11,20 @@ export class GetDataLessonDto {
   pageSize: number;
 
   @IsString()
-  @ApiPropertyOptional({ required: false })
+  @ApiPropertyOptional({ description: "Từ khóa tìm kiếm theo tiêu đề", required: false })
   filters?: string;
 
   @IsNumber()
-  @ApiPropertyOptional({ required: false })
+  @ApiPropertyOptional({ description: "ID bài học cụ thể", required: false })
   id?: number;
+
+  @IsString()
+  @ApiPropertyOptional({ description: "Lọc theo danh mục", required: false })
+  category?: string;
+
+  @IsNumber()
+  @ApiPropertyOptional({ description: "Lọc theo cấp độ", required: false })
+  level?: number;
 }
 
 export class CreateLessonDto {
@@ -39,6 +47,10 @@ export class CreateLessonDto {
   @IsString()
   @ApiProperty({ description: "Danh mục" })
   category?: string;
+
+  @IsNumber()
+  @ApiProperty({ description: "Cấp độ bài học" })
+  level?: number;
 }
 
 export class UpdateLessonDto {
@@ -90,6 +102,10 @@ export class LessonResponseDto {
   @ApiPropertyOptional({ description: "Danh mục" })
   category?: string;
 
+  @IsNumber()
+  @ApiPropertyOptional({ description: "Cấp độ bài học" })
+  level?: number;
+
   created_date: Date;
   modified_date: Date;
   deleted_date: Date;
@@ -101,6 +117,7 @@ export class LessonResponseDto {
     this.content = lesson.content;
     this.status_id = lesson.status;
     this.category = lesson.category;
+    this.level = lesson.level;
     this.created_date = lesson.created_date;
     this.modified_date = lesson.modified_date;
     this.deleted_date = lesson.deleted_date;

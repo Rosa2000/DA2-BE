@@ -54,6 +54,7 @@ export class LessonController {
         data: handleAddLesson
       });
     } catch (error) {
+      console.log("error", error);
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
         .json({ code: -5, message: responseMessage.serviceError });
@@ -135,12 +136,16 @@ export class LessonController {
       const page = dataQuery.page || 0;
       const pageSize = dataQuery.pageSize || 10;
       const filters = dataQuery.filters || "";
+      const category = dataQuery.category;
+      const level = dataQuery.level;
 
       const lessonInformation = await this.lessonServcie.getDataLessons(
         page,
         pageSize,
         filters,
-        id
+        id,
+        category,
+        level
       );
       return res.status(HttpStatus.OK).json({
         code: 0,
