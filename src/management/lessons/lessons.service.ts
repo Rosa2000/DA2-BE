@@ -95,6 +95,7 @@ export class LessonsService {
         totalPages: totalPages
       };
     } catch (error) {
+      console.log(error);
       throw new InternalServerErrorException({
         code: -5,
         message: responseMessage.serviceError
@@ -144,7 +145,9 @@ export class LessonsService {
       where: { id: dto.lesson_id }
     });
     if (!lesson) {
-      throw new NotFoundException(`Không tìm thấy bài học có ID ${dto.lesson_id}`);
+      throw new NotFoundException(
+        `Không tìm thấy bài học có ID ${dto.lesson_id}`
+      );
     }
 
     // Kiểm tra trạng thái hợp lệ (3, 4, 5)
