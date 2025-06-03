@@ -36,7 +36,7 @@ import {
 export class ExerciseController {
   constructor(private readonly exercisesService: ExercisesService) {}
 
-  @Post("/add_lesson")
+  @Post("/add_exercise")
   @ApiOperation({ summary: "Thêm bài tập mới" })
   @ApiBody({ type: CreateExerciseDto })
   @UseGuards(VerifyLoginMiddleware)
@@ -122,6 +122,30 @@ export class ExerciseController {
     }
   }
 
+  @Post("/restore_exercise")
+  @ApiOperation({ summary: "Khôi phục bài tập" })
+  @ApiQuery({ type: ExerciseIdDto })
+  @UseGuards(VerifyLoginMiddleware)
+  @ApiBearerAuth()
+  async handleRestoreExercise(
+    @Query() dataQuery: ExerciseIdDto,
+    @Req() req: any,
+    @Res() res: any
+  ): Promise<any> {
+    try {
+      const handleRestoreExercise =
+        await this.exercisesService.restoreExercise(dataQuery.id);
+      return res.status(HttpStatus.OK).json({
+        code: handleRestoreExercise.code,
+        message: handleRestoreExercise.message
+      });
+    } catch (error) {
+      return res
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .json({ code: -5, message: responseMessage.serviceError });
+    }
+  }
+
   @Get("/data_exercises")
   @ApiOperation({ summary: "Lấy danh sách bài tập" })
   @ApiQuery({ type: GetDataExerciseDto })
@@ -137,11 +161,13 @@ export class ExerciseController {
       const page = dataQuery.page || 0;
       const pageSize = dataQuery.pageSize || 10;
       const filters = dataQuery.filters || "";
+      const lessonId = dataQuery.lessonId || undefined;
 
       const exerciseInformation = await this.exercisesService.getDataExcercise(
         page,
         pageSize,
         filters,
+        lessonId,
         id
       );
       return res.status(HttpStatus.OK).json({

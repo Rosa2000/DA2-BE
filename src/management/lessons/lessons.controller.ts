@@ -121,6 +121,31 @@ export class LessonController {
     }
   }
 
+  @Post("/restore_lesson")
+  @ApiOperation({ summary: "Khôi phục bài học" })
+  @ApiQuery({ type: IdLessonDto })
+  @UseGuards(VerifyLoginMiddleware)
+  @ApiBearerAuth()
+  async handleRestoreLesson(
+    @Query() dataQuery: IdLessonDto,
+    @Req() req: any,
+    @Res() res: any
+  ): Promise<any> {
+    try {
+      const handleRestoreLesson = await this.lessonServcie.restoreLesson(
+        dataQuery.id
+      );
+      return res.status(HttpStatus.OK).json({
+        code: handleRestoreLesson.code,
+        message: handleRestoreLesson.message
+      });
+    } catch (error) {
+      return res
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .json({ code: -5, message: responseMessage.serviceError });
+    }
+  }
+
   @Get("/data_lessons")
   @ApiOperation({ summary: "Lấy danh sách bài học" })
   @ApiQuery({ type: GetDataLessonDto })
@@ -136,6 +161,7 @@ export class LessonController {
       const page = dataQuery.page || 0;
       const pageSize = dataQuery.pageSize || 10;
       const filters = dataQuery.filters || "";
+      const status_id = dataQuery.status_id;
       const category = dataQuery.category;
       const level = dataQuery.level;
 
@@ -145,7 +171,8 @@ export class LessonController {
         filters,
         id,
         category,
-        level
+        level,
+        status_id
       );
       return res.status(HttpStatus.OK).json({
         code: 0,

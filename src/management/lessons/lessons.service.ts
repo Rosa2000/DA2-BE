@@ -49,7 +49,8 @@ export class LessonsService {
     filters?: string,
     id?: number,
     category?: string,
-    level?: number
+    level?: number,
+    status_id?: number
   ): Promise<any> {
     try {
       page = Math.max(1, page);
@@ -83,6 +84,10 @@ export class LessonsService {
         queryBuilder.andWhere("lessons.level = :level", { level });
       }
 
+      if (status_id) {
+        queryBuilder.andWhere("lessons.status_id = :status_id", { status_id });
+      }
+
       const [lessonListData, total] = await queryBuilder
         .skip(skip)
         .take(pageSize)
@@ -95,7 +100,6 @@ export class LessonsService {
         totalPages: totalPages
       };
     } catch (error) {
-      console.log(error);
       throw new InternalServerErrorException({
         code: -5,
         message: responseMessage.serviceError
@@ -104,7 +108,7 @@ export class LessonsService {
   }
 
   async updateLesson(id: number, dto: UpdateLessonDto): Promise<any> {
-    const { category, content, title, type } = dto;
+    const { category, content, title, type, status_id } = dto;
 
     const lesson = await this.lessonRepository.findOne({
       where: { id, status_id: 1 }
@@ -115,7 +119,7 @@ export class LessonsService {
 
     await this.lessonRepository.update(
       { id },
-      { category, content, title, type, modified_date: new Date() }
+      { category, content, title, type, status_id, modified_date: new Date() }
     );
     return { code: 0, message: responseMessage.success };
   }
@@ -134,6 +138,20 @@ export class LessonsService {
     return { code: 0, message: responseMessage.success };
   }
 
+  async restoreLesson(id: number): Promise<any> {
+    const lesson = await this.lessonRepository.findOne({
+      where: { id, status_id: 2 }
+    });
+    if (!lesson) {
+      throw new NotFoundException(`Không tìm thấy bài học có ID ${id}`);
+    }
+    await this.lessonRepository.update(
+      { id },
+      { status_id: 1, deleted_date: undefined, modified_date: new Date() }
+    );
+    return { code: 0, message: responseMessage.success };
+  }
+
   async studyLesson(
     dto: StudyLessonDto,
     userId: number
@@ -145,9 +163,7 @@ export class LessonsService {
       where: { id: dto.lesson_id }
     });
     if (!lesson) {
-      throw new NotFoundException(
-        `Không tìm thấy bài học có ID ${dto.lesson_id}`
-      );
+      throw new NotFoundException(`Không tìm thấy bài học có ID ${dto.lesson_id}`);
     }
 
     // Kiểm tra trạng thái hợp lệ (3, 4, 5)
