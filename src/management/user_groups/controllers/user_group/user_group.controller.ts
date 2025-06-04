@@ -15,7 +15,9 @@ import {
   Req,
   Body,
   Query,
-  UseGuards
+  UseGuards,
+  Put,
+  Delete
 } from "@nestjs/common";
 import { responseMessage } from "src/utils/constant";
 
@@ -173,7 +175,7 @@ export class UserGroupManagmentController {
     }
   }
 
-  @Post("/edit_role")
+  @Put("/edit_role")
   @ApiOperation({ summary: "Thay đổi thông tin vai trò" })
   @ApiQuery({ type: IdUserGroupDto })
   @ApiBody({ type: AddGroupRoleDto })
@@ -206,7 +208,7 @@ export class UserGroupManagmentController {
     }
   }
 
-  @Post("/delete_role")
+  @Delete("/delete_role")
   @ApiOperation({ summary: "Vô hiệu hóa vai trò" })
   @ApiQuery({ type: IdUserGroupDto })
   @UseGuards(VerifyLoginMiddleware)

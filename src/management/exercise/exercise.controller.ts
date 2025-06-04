@@ -1,9 +1,11 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpStatus,
   Post,
+  Put,
   Query,
   Req,
   Res,
@@ -62,7 +64,7 @@ export class ExerciseController {
     }
   }
 
-  @Post("/edit_exercise")
+  @Put("/edit_exercise")
   @ApiOperation({ summary: "Thay đổi thông tin bài tập" })
   @ApiBody({ type: UpdateExerciseDto })
   @ApiQuery({ type: ExerciseIdDto })
@@ -97,7 +99,7 @@ export class ExerciseController {
     }
   }
 
-  @Post("/delete_exercise")
+  @Delete("/delete_exercise")
   @ApiOperation({ summary: "Xóa bài tập" })
   @ApiQuery({ type: ExerciseIdDto })
   @UseGuards(VerifyLoginMiddleware)
@@ -133,8 +135,9 @@ export class ExerciseController {
     @Res() res: any
   ): Promise<any> {
     try {
-      const handleRestoreExercise =
-        await this.exercisesService.restoreExercise(dataQuery.id);
+      const handleRestoreExercise = await this.exercisesService.restoreExercise(
+        dataQuery.id
+      );
       return res.status(HttpStatus.OK).json({
         code: handleRestoreExercise.code,
         message: handleRestoreExercise.message
