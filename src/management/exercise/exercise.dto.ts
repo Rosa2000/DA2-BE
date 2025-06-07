@@ -272,8 +272,22 @@ export class ExerciseResponseDto {
 }
 
 export class DoExerciseDto {
+   @ApiProperty({
+    description: "Id exercise"
+  })
+  @IsNumber()
   exercise_id: number;
+
+   @ApiProperty({
+    description: "user answer"
+  })
+  @IsString()
   user_answer: string;
+
+   @ApiProperty({
+    description: "Id status"
+  })
+  @IsNumber()
   status_id: number; // 3 (started), 4 (going), 5 (ended)
 }
 
